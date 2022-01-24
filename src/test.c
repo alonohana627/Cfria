@@ -3,7 +3,5 @@
 #include <stdio.h>
 
 int main(){
-    char c = a_getchar();
-    printf("%c\n", c);
     return 0;
 }

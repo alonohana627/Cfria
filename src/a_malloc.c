@@ -18,7 +18,9 @@ void a_free(void *blk){
     
     block_start = (A_Header *)blk-1; /*Pointer to the block*/
 
-    for(pointer=free_list; !(block_start > pointer && block_start < pointer->s.ptr); pointer = pointer->s.ptr){ /*Travels on the free list until reaching a free block to insert. */
+    for(pointer=free_list;
+        !(block_start > pointer && block_start < pointer->s.ptr);
+        pointer = pointer->s.ptr){ /*Travels on the free list until reaching a free block to insert. */
         if(pointer >= pointer->s.ptr && (block_start>pointer || block_start < pointer->s.ptr)){
             break; /*Free a block at the start or at the end.*/
         }

@@ -29,6 +29,8 @@ enum a_flags{
     F_ERR = 020 /*Error*/
 };
 
+/*basic buffers*/
+/*TODO: explain*/
 int a_fillbuf(A_FILE *);
 int a_fflush(A_FILE *);
 int a_flushbuf(int, A_FILE *);
@@ -41,14 +43,14 @@ int a_flushbuf(int, A_FILE *);
 #define a_getc(p) (--(p)->char_left >= 0 ? (unsigned char) *(p)->ptr++ : a_fillbuf(p))
 
 /*TODO: explain*/
-#define a_putc(x,p) (--(p)->char_left>=0\
-    ? *(p)->ptr++ = (x) : a_flushbuf((x), p))
+#define a_putc(x,p) (--(p)->char_left>=0 ? *(p)->ptr++ = (x) : a_flushbuf((x), p))
 
 #define a_getchar() a_getc(a_stdin)
 #define a_putchar(x) a_putc((x), a_stdout)
 
 /*File IO*/
 A_FILE *a_fopen(char*, char*);
+int *a_fclose(A_FILE *fp);
 
 /*printf, scanf*/
 void a_printf(char *fmt, ...);

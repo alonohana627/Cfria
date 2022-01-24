@@ -1,7 +1,8 @@
-#include "../include/a_stdio.h"
-#include "../include/a_stdlib.h"
+#include "../../include/a_stdio.h"
+#include "../../include/a_stdlib.h"
 #include <sys/types.h>
 #include <unistd.h> /*for syscalls*/
+#include <stdio.h>
 
 A_FILE _io_buffer[A_OPEN_MAX] = {
     {0, (char *) 0, (char *) 0 ,F_READ, 0},
@@ -42,14 +43,25 @@ int a_fillbuf(A_FILE *fp){
     return (unsigned char) *fp->ptr++;
 }
 
-int a_flushbuf(int, A_FILE *);
+int a_flushbuf(int c, A_FILE *fp)
+{
+    if (fp == NULL ){ /*Bad pointer*/
+        return EOF;
+    }
+    else if (a_fflush(fp) == EOF) {/*fflush problem*/
+        return EOF;
+    }
+    *fp->ptr++ = (char) c;
+    fp->char_left--;
+    return 0;
+}
 
-int a_fflush(A_FILE *fp){
+int a_fflush(A_FILE *fp) {
     int i;
     if (fp == NULL) {
         int result = 0;
-        for (i = 0; i < A_OPEN_MAX; i++){
-            if (((&_io_buffer[i])->flag & F_WRITE) == F_WRITE && a_fflush(&_io_buffer[i]) == A_EOF){
+        for (i = 0; i < A_OPEN_MAX; i++) {
+            if (((&_io_buffer[i])->flag & F_WRITE) == F_WRITE && a_fflush(&_io_buffer[i]) == EOF){
                 result = A_EOF;
             }
         }
@@ -59,25 +71,26 @@ int a_fflush(A_FILE *fp){
         return A_EOF;
     }
     else if ((fp->flag & (F_WRITE | F_ERR | F_READ)) != F_WRITE){
-        return A_EOF; 
+        return A_EOF;
     }
 
-    int bufsize = (fp->flag & F_UNBUF) ? 1 : A_BUFSIZE; /* get buffer size*/
+    int bufsize = (fp->flag & F_UNBUF) ? 1 : A_BUFSIZE;
 
-    if (fp->base == NULL){ 
-        if ((fp->base = (char *) a_malloc(bufsize)) == NULL){ /*Attempt to create buffer*/
-            fp->flag |= F_ERR; /*An error occured*/
-            return A_EOF; /*a_malloc failed*/
-        }
-    }
-    else { /*Buffer exists, writes to file*/
-        int n = fp->ptr - fp->base; /*Gets the number of chars in the buffer*/
-        if (write(fp->fd, fp->base, n) != n) {  /*Writes them*/
-            fp->flag |= F_ERR; /*An error occured*/
+    if (fp->base == NULL) {
+        if ((fp->base = (char *) a_malloc(bufsize)) == NULL) {
+            fp->flag |= F_ERR;
             return A_EOF;
         }
     }
-    fp->ptr = fp->base; /*Resets the pointer to it's based location*/
-    fp->char_left = bufsize; /*update the counter for the number of chars that can fit in the buffer so putc will work correctly*/
+
+    else {
+        int n = fp->ptr - fp->base;
+        if (write(fp->fd, fp->base, n) != n) {
+            fp->flag |= F_ERR;
+            return EOF;
+        }
+    }
+    fp->ptr = fp->base;
+    fp->char_left = bufsize;
     return 0;
 }
