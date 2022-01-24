@@ -1,4 +1,15 @@
-## a_stdio.h:
+## a_stdlib.h:
+- [ ] booleans
+- [x] null
 - [x] malloc
 - [x] free
-- [ ] s
+- [ ] calloc
+- [ ] realloc
+## a_stdio.h
+- [x] eof
+- [ ] printf
+- [ ] scanf
+- [ ] sprintf
+- [ ] sscanf
+- [ ] fopen
+- [ ] fclose
