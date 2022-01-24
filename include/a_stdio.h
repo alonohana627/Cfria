@@ -49,6 +49,11 @@ int a_flushbuf(int, A_FILE *);
 #define a_getchar() a_getc(stding)
 #define a_putchar(x) a_putc((x), stdout)
 
+/*File IO*/
+
+/*printf, scanf*/
+void a_printf(char *fmt, ...);
+
 /*Memory allocation*/
 
 /* How does it work:

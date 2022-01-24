@@ -4,7 +4,8 @@ static A_Header base; /*Empty list*/
 static A_Header *free_list = A_NULL; /*Free list*/
 
 /*Malloc Magic:*/
-/* *sbrk(int): a system call to the OS to assign more memory. I will not implement in the library any system calls, it is OS level that are above my current level, but I will use them. 
+/* *sbrk(int): a system call to the OS to assign more memory. 
+ *  I will not implement in the library any system calls, it is OS level that are above my current level, but I will use them. 
  *  sbrk can be used without imports
  * *a_morecore(unsigned): Ask the OS for more memory using sbrk.
  * *a_malloc(unsigned): general-purpose storage allocator that throws the memory to the heap.
