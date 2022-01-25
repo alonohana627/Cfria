@@ -43,8 +43,7 @@ int a_fillbuf(A_FILE *fp){
     return (unsigned char) *fp->ptr++;
 }
 
-int a_flushbuf(int c, A_FILE *fp)
-{
+int a_flushbuf(int c, A_FILE *fp) {
     if (fp == NULL ){ /*Bad pointer*/
         return EOF;
     }
@@ -71,6 +70,7 @@ int a_fflush(A_FILE *fp) {
         return A_EOF;
     }
     else if ((fp->flag & (F_WRITE | F_ERR | F_READ)) != F_WRITE){
+        printf("hey\n");
         return A_EOF;
     }
 
@@ -81,8 +81,8 @@ int a_fflush(A_FILE *fp) {
             fp->flag |= F_ERR;
             return A_EOF;
         }
+        int a = write(fp->fd, fp->base, 4);
     }
-
     else {
         int n = fp->ptr - fp->base;
         if (write(fp->fd, fp->base, n) != n) {

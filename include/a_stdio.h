@@ -1,5 +1,5 @@
-#ifndef A_STDIO
-#define A_STDIO
+#ifndef A_STDIO_H
+#define A_STDIO_H
 
 #define A_EOF (-1)
 #define A_BUFSIZE 1024

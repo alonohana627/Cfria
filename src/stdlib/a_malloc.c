@@ -1,4 +1,4 @@
-#include "../include/a_stdlib.h"
+#include "../../include/a_stdlib.h"
 
 static A_Header base; /*Empty list*/
 static A_Header *free_list = A_NULL; /*Free list*/
@@ -78,9 +78,9 @@ void *a_malloc(unsigned num){
     A_Header *p, *prevp;
     unsigned nunits;
 
-    nunits = (num+sizeof(A_Header)-1)/sizeof(A_Header)+1;
+    nunits = (num + sizeof(A_Header) - 1)/sizeof(A_Header) + 1;
 
-    if((prevp=free_list)==A_NULL){ /*init free list if a freelist doesn't exists*/
+    if((prevp=free_list)==A_NULL) { /*init free list if a freelist doesn't exists*/
         base.s.ptr = free_list = prevp = &base;
         base.s.size = 0;
     }
