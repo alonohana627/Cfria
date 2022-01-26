@@ -22,7 +22,7 @@ I will not implement any OS stuff, I am not there yet. But for now, implement th
 
 ## Compatibility and Toolchain
 - All of the code will be tested on GNU/Linux Pop_OS
-- The compiler I will use will be GCC with `-Wall -ansi -pedantic` flags.
+- The compiler I will use will be `GCC` with `-Wall -std=c99` flags.
 
 ## License
-I use GCC so it's GPL v3. If I can use any other license (public domain) HMU.
+GPL v3.

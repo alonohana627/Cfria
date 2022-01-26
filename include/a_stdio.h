@@ -69,6 +69,7 @@ long a_ftell(A_FILE *stream);
 void a_rewind(A_FILE *stream);
 
 /*printf, scanf*/
-void a_printf(char *fmt, ...);
+int a_fprintf(A_FILE *stream, const char *format, ...);
+int a_printf(char *fmt, ...);
 
 #endif
